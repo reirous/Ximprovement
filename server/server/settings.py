@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frigobar.apps.FrigobarConfig',
     'rest_framework',
+    'drf_yasg',
+    'frigobar.apps.FrigobarConfig',
 ]
 
 MIDDLEWARE = [
