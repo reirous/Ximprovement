@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from frigobar.models.Product import Product
-from frigobar.serializers import ProductSerializer
+from frigobar.serializers.ProductSerializer import ProductSerializer
 # Create your views here.
 
 class ProductViewSet(viewsets.ModelViewSet):
