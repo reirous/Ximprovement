@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'frigobar.apps.FrigobarConfig',
 ]
 
+AUTH_USER_MODEL = 'frigobar.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
