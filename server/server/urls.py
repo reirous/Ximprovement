@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from frigobar.views.ProductView import ProductViewSet
+from frigobar.views.OrderView import OrderViewSet
+from frigobar.views.ItemView import ItemViewSet
 from rest_framework import routers
 
 from rest_framework import permissions
@@ -36,7 +38,10 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r'produtos', ProductViewSet)
+router.register(r'product', ProductViewSet)
+router.register(r'order', OrderViewSet)
+router.register(r'item', ItemViewSet)
+
 
 urlpatterns = [
     #swagger
