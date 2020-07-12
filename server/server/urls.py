@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from frigobar.views.ProductView import ProductViewSet
+from frigobar.views.productView import ProductViewSet
 from rest_framework import routers
 
 from rest_framework import permissions

@@ -1,5 +1,5 @@
 from django.db import models
-from .User import User
+from .user import User
 
 class Order(models.Model):
     SALE = 0
