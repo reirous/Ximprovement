@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from frigobar.views.productView import ProductViewSet
+from frigobar.views import loginView
 from rest_framework import routers
 
 from rest_framework import permissions
@@ -50,4 +51,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('login/', loginView.user_login, name='login'),
+    path('logout/', loginView.user_logout, name='logout'),
 ]
