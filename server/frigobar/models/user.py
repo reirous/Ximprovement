@@ -4,13 +4,18 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):
+    def create_user(self,username, email, password=None, is_active=True, is_staff=False, is_admin=False):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
+            username=username
         )
 
         user.set_password(password)
@@ -20,16 +25,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_staffuser(self, email, password):
+    def create_staffuser(self,username, email, password):
         user = self.create_user(
+            username,
             email,
             password=password,
             is_staff=True
         )
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self,username, email, password):
         user = self.create_user(
+            username,
             email,
             password=password,
             is_staff=True,
@@ -43,6 +50,9 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    username = models.CharField("User name", max_length=100)
+    first_name = models.CharField("First name", max_length=100, default=None, blank=True, null=True)
+    last_name = models.CharField("Last name", max_length=100, default=None, blank=True, null=True)
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False) # a admin user; non super-user
     admin = models.BooleanField(default=False) # a superuser
@@ -51,12 +61,10 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = [] # Email & Password are required by default.
 
     def get_full_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.username
 
     def get_short_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.username
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
