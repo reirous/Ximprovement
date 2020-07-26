@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.conf.urls import include, url
 from frigobar.views.productView import ProductViewSet
+from frigobar.views.orderView import OrderViewSet
+from frigobar.views.itemView import ItemViewSet
 from frigobar.views.userView import RegisterAPI
 from frigobar.views.loginView import LoginAPI
 from rest_framework import routers
@@ -24,6 +26,8 @@ from knox import views as knox_views
 
 router = routers.DefaultRouter()
 router.register(r'produtos', ProductViewSet)
+router.register(r'order', OrderViewSet)
+router.register(r'item', ItemViewSet)
 
 urlpatterns = [    
     path('', include(router.urls)),

@@ -15,8 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from django.conf.urls import include, url
-from knox import views as knox_views
+from django.conf.urls import include
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
