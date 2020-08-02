@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from frigobar.models.product import Product 
 
-class ProductSerializer(serializers.ModelSerializer):  # TODO Se atentar às convenções para organização do código (nesse caso duas linhas em branco antes da classe)
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         depth = 0
