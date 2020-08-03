@@ -27,7 +27,7 @@ from knox import views as knox_views
 router = routers.DefaultRouter()
 router.register(r'produtos', ProductViewSet)
 router.register(r'order', OrderViewSet)
-router.register(r'item', ItemViewSet)
+router.register(r'itens', ItemViewSet)
 
 urlpatterns = [    
     path('', include(router.urls)),

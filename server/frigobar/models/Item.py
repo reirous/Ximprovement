@@ -7,3 +7,6 @@ class Item(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField("Quantity sale")
     price = models.DecimalField("Sale price", max_digits=15, decimal_places=2)
+
+    class Meta:
+        unique_together = ('order_id','product_id')
