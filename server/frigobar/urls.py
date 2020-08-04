@@ -18,6 +18,8 @@ from django.urls import path, re_path
 from django.conf.urls import include, url
 from frigobar.views.productView import ProductViewSet
 from frigobar.views.orderView import OrderViewSet
+from frigobar.views.orderView import OrderGetUser
+from frigobar.views.orderView import OrderGetDate
 from frigobar.views.itemView import ItemViewSet
 from frigobar.views.userView import RegisterAPI
 from frigobar.views.loginView import LoginAPI
@@ -33,5 +35,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='login'),
-    path('logout/', knox_views.LogoutView.as_view(), name='logout'),
+    path('logout/', knox_views.LogoutView.as_view(), name='logout'),    
+    path("order/user/<user>/", OrderGetUser.as_view(), name='order_user'),
+    path("order/date/<user>/<start>/<end>/", OrderGetDate.as_view(), name='order_date'),
 ]

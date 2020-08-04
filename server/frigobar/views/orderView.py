@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import UpdateModelMixin
+from rest_framework.generics import ListAPIView
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from frigobar.models.order import Order
 from frigobar.serializers.orderSerializer import OrderSerializer
 
@@ -9,9 +10,19 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
-class OrderPartialUpdateView(GenericAPIView, UpdateModelMixin):
-    queryset = Order.objects.all()
+class OrderGetUser(ListAPIView):    
     serializer_class = OrderSerializer
 
-    def put (self, request, *arg, **kwargs):
-        return self.partial_update(request, *arg, **kwargs)
+    def get_queryset (self):
+        user = self.kwargs.get('user')
+        return Order.objects.filter(user=user)
+
+
+class OrderGetDate(ListAPIView):
+    serializer_class = OrderSerializer
+    
+    def get_queryset (self):
+        user = self.kwargs.get('user', None)
+        start = self.kwargs.get('start', None)
+        end = self.kwargs.get('end', None)
+        return Order.objects.filter(user=user, date__range=[start, end])

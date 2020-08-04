@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'drf_yasg',
-    'frigobar.apps.FrigobarConfig',
+    'frigobar.apps.FrigobarConfig',    
 ]
 
 REST_FRAMEWORK = {
