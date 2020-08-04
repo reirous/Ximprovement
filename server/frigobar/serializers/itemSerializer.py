@@ -28,3 +28,24 @@ class ItemConsumedSerializer(serializers.ModelSerializer):
         model = Item
         depth = 0
         fields = ["product_id", "description", "total_quantity", "total_cash_in", "total_accredit"]
+
+#Falta finalizar
+class ItemConsumedUserSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='order.user.id', read_only=True)
+    date = serializers.DateField(source='order.date', read_only=True)
+    justification = serializers.CharField(source='order.justification', read_only=True)
+    orderType =serializers.CharField(source='order.orderType', read_only=True)
+    quantity_cash_in = serializers.DecimalField(15,2)
+    quantity_accredit = serializers.DecimalField(15,2)
+    class Meta:
+        model = Item
+        depth = 0
+        fields = ["user_id",
+                  "date",
+                  "justification",
+                  "orderType",
+                  "description",
+                  "price",
+                  "quantity",
+                  "quantity_cash_in",
+                  "quantity_accredit"]
