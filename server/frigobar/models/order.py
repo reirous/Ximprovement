@@ -7,7 +7,7 @@ class OrderType:
     DELETED = 3
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     orderType = models.IntegerField()
     justification = models.CharField("Order justification", max_length=150, default=None, blank=True, null=True)
     date = models.DateTimeField("Order date")
