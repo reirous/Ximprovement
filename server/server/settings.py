@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'frigobar.apps.FrigobarConfig',
+    'silk',
 ]
 
 REST_FRAMEWORK = {
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -124,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SILKY_META = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
