@@ -13,7 +13,7 @@ class ProductFilters(filters.FilterSet):
     class Meta:
         model = Product
         fields = {
-            'itemsProduct__order__date': ['lte','gte']
+            'itemsProduct__order__date': ['range']
         }
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -37,8 +37,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         url_path="consumed"
     )
     def get_consumed(self, request):
-        products = self.filter_queryset(
-                self.get_queryset().annotate(
+        products = self.filter_queryset(self.get_queryset()).annotate(
                     total_quantity=Sum('itemsProduct__quantity'),
                     total_cash_in=Sum
                                  (
@@ -71,6 +70,5 @@ class ProductViewSet(viewsets.ModelViewSet):
                                     )
                                  )
                 )
-            )
         serializer = ProductConsumedSerializer(products, many=True)
         return Response(data=serializer.data)
