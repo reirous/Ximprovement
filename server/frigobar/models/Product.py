@@ -5,3 +5,4 @@ class Product(models.Model):
     status = models.BooleanField("Product's active", default=True)
     price = models.DecimalField("Product's price", max_digits=15, decimal_places=2) 
     priceDate = models.DateTimeField("Price date")
+    barCode = models.CharField("Product's barcode", max_length=13)
