@@ -25,7 +25,7 @@ SECRET_KEY = 'qu71o(8c&f1!hf)x=i#7)y2166yu4nb$m+d1hu%t*3al4b!8s)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'frigobar.apps.FrigobarConfig',
     'silk',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +65,8 @@ AUTH_USER_MODEL = 'frigobar.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -92,6 +95,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8080' # Here was the problem indeed and it has to be http://localhost:3000, not http://localhost:3000/
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
