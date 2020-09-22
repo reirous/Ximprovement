@@ -25,13 +25,13 @@ from rest_framework import routers
 from knox import views as knox_views
 
 router = routers.DefaultRouter()
-router.register(r'produtos', ProductViewSet)
+router.register(r'products', ProductViewSet)
 router.register(r'order', OrderViewSet)
-router.register(r'itens', ItemViewSet)
+router.register(r'items', ItemViewSet)
 
 urlpatterns = [    
     path('', include(router.urls)),
-    path('register/', RegisterAPI.as_view(), name='register'),
+    path('register', RegisterAPI.as_view(), name='register'),
     path('login', LoginAPI.as_view(), name='login'),
-    path('logout/', knox_views.LogoutView.as_view(), name='logout'),
+    path('logout', knox_views.LogoutView.as_view(), name='logout'),
 ]

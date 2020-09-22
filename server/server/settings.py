@@ -101,6 +101,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080' # Here was the problem indeed and it has to be http://localhost:3000, not http://localhost:3000/
 ]
 
+APPEND_SLASH=False
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

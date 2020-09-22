@@ -24,7 +24,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     @action(
     methods=["get"],
     detail=False,
-    url_path="ativos",
+    url_path="actives",
     )
     def get_actives(self, request):
         products = self.get_queryset().filter(status=True)
