@@ -22,7 +22,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     @action(
     methods=["get"],
     detail=False,
-    url_path="dopedido/(?P<order_id>[^/.]+)",
+    url_path="byOrder/(?P<order_id>[^/.]+)",
     )
     def get_itemsOrder(self, request, order_id):
         items = self.get_queryset().filter(order_id=order_id)
@@ -32,7 +32,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     @action(
         methods=["get"],
         detail=False,
-        url_path="doUsuario/(?P<user_id>[^/.]+)"
+        url_path="byUser/(?P<user_id>[^/.]+)"
     )
     def get_fromUser(self, request, user_id):
         items = self.filter_queryset(self.get_queryset().filter(order__user_id=user_id))
