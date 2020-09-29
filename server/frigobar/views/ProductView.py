@@ -29,6 +29,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def get_actives(self, request):
         products = self.get_queryset().filter(status=True)
         serializer = self.serializer_class(products, many=True)
+
         return Response(data=serializer.data)
 
     @action(

@@ -43,6 +43,6 @@ class RegisterAPI(generics.GenericAPIView):
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         """
-        teste = {'email' : 'teste3@teste.com.br', 'perm_admin' : True}
+        teste = {'user': '10', 'email' : 'teste3@teste.com.br', 'perm_admin' : True}
         #final = {'perfil' : teste}
         return JsonResponse({'perfil': teste})
