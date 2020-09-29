@@ -16,3 +16,12 @@ class OrderTotalSerializer(serializers.ModelSerializer):
         model = Order
         depth = 0
         fields = ["id", "user", "date", "total_accredit", "total_cash_in"]
+
+class OrderPeriodSerializer(serializers.ModelSerializer):
+    month = serializers.CharField()
+    year = serializers.CharField()
+
+    class Meta:
+        model = Order
+        depth = 0
+        fields = ["month", "year"]

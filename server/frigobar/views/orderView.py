@@ -3,9 +3,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from frigobar.models.order import Order
-from frigobar.serializers.orderSerializer import OrderSerializer, OrderTotalSerializer
+from frigobar.serializers.orderSerializer import OrderSerializer, OrderTotalSerializer, OrderPeriodSerializer
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField, Case, When
 from django_filters import rest_framework as filters
+from django.db.models.functions import ExtractMonth, ExtractYear
+import datetime
 
 class OrderFilters(filters.FilterSet):
 
@@ -56,3 +58,23 @@ class OrderViewSet(viewsets.ModelViewSet):
         )
         serializer = OrderTotalSerializer(order, many=True)
         return Response(data=serializer.data)
+
+    @action(
+        methods=["get"],
+        detail=False,
+        url_path="period",
+    )
+    def get_period(self, request):
+        periods = self.filter_queryset(self.get_queryset()).annotate(
+            month=ExtractMonth('date'), year=ExtractYear('date')
+        ).values('month','year').distinct()
+        serializer = OrderPeriodSerializer(periods, many=True)
+
+        months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+                 'Novembro', 'Dezembro']
+        monthsList = []
+
+        for aux in serializer.data:
+            monthsList.append({'value': datetime.date(int(aux['year']), int(aux['month']) - 1, 1), 'label': months[int(aux['month']) - 1] + ' ' + aux['year']})
+
+        return Response(data=monthsList)
