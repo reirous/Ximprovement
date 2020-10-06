@@ -6,6 +6,7 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         depth = 0
         fields = "__all__"
+        read_only_fields = ["order"]
 
 class ItemProductSerializer(serializers.ModelSerializer):
     description = serializers.CharField(source='product.description', read_only=True)

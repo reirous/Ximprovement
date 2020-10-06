@@ -16,4 +16,3 @@ class ProductConsumedSerializer(serializers.ModelSerializer):
         model = Product
         depth = 0
         fields = ["id", "description", "total_quantity", "total_cash_in", "total_accredit"]
-
