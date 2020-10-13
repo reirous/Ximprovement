@@ -35,15 +35,8 @@ class RegisterAPI(generics.GenericAPIView):
         """
         Get the data from the currently logged user
         """
-        #serializer_class = self.get_serializer_class()
-        #return Response(data={}serializer_class(request.user).data)
-        """
         if request.user.is_authenticated:
-            return Response(data=self.serializer_class(request.user).data)
+            aux = {'user': request.user.id, 'email' : request.user.email, 'perm_admin' : request.user.is_staff}
+            return JsonResponse({'perfil': aux})
         else:
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        """
-        teste = {'user': '10', 'email' : 'teste3@teste.com.br', 'perm_admin' : True}
-        #final = {'perfil' : teste}
-        return JsonResponse({'perfil': teste})
-        #return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(status=status.HTTP_200_OK)

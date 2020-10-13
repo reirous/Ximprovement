@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from frigobar.models.order import Order
 from frigobar.models.item import Item
-from frigobar.serializers.itemSerializer import ItemSerializer
+from django.db.transaction import atomic
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,19 +30,28 @@ class OrderPeriodSerializer(serializers.ModelSerializer):
         depth = 0
         fields = ["month", "year"]
 
+class ItemSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        depth = 0
+        exclude = ("order",)
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
 
-    items = ItemSerializer(many=True)
+    items = ItemSerializer2(many=True)
 
     class Meta:
         model = Order
         depth = 0
         fields = ["user", "orderType", "justification", "date", "items"]
 
+    @atomic
     def create(self, validated_data):
         items = validated_data.pop('items')
         instance = Order.objects.create(**validated_data)
         for item in items:
-            teste = Item.objects.create(item)
+            instance.items.add(Item.objects.create(**item, order=instance))
+            #teste = Item.objects.create(**item, order=instance)
 
         return instance

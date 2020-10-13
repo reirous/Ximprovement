@@ -19,8 +19,9 @@ class OrderFilters(filters.FilterSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    serializer_class = OrderItemSerializer
     filterset_class = OrderFilters
+    http_method_names = ['get', "post", "patch"]
 
     @action(
         methods=["get"],
