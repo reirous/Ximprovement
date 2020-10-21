@@ -21,6 +21,7 @@ from frigobar.views.orderView import OrderViewSet
 from frigobar.views.itemView import ItemViewSet
 from frigobar.views.userView import RegisterAPI
 from frigobar.views.loginView import LoginAPI
+from frigobar.views.photoView import PhotoViewSet
 from rest_framework import routers
 from knox import views as knox_views
 
@@ -28,6 +29,7 @@ router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet)
 router.register(r'order', OrderViewSet)
 router.register(r'items', ItemViewSet)
+router.register(r'photo', PhotoViewSet)
 
 urlpatterns = [    
     path('', include(router.urls)),
