@@ -9,12 +9,22 @@ class OrderSerializer(serializers.ModelSerializer):
         depth = 0
         fields = '__all__'
 
-
 class OrderTotalSerializer(serializers.ModelSerializer):
     total_cash_in = serializers.DecimalField(15, 2, read_only=True)
     total_accredit = serializers.DecimalField(15, 2, read_only=True)
+    name = serializers.CharField(source='user.first_name', read_only=True)
+
+    class Meta:
+        model = Order
+        depth = 0
+        fields = ["user", "name", "total_accredit", "total_cash_in"]
+
+
+class OrderAllSerializer(serializers.ModelSerializer):
+    total_cash_in = serializers.DecimalField(15, 2, read_only=True)
+    total_accredit = serializers.DecimalField(15, 2, read_only=True)
     total = serializers.DecimalField(15, 2, read_only=True)
-    name = serializers.CharField(source='order.user.first_name', read_only=True)
+    name = serializers.CharField(source='user.first_name', read_only=True)
 
     class Meta:
         model = Order
@@ -30,7 +40,7 @@ class OrderPeriodSerializer(serializers.ModelSerializer):
         depth = 0
         fields = ["month", "year"]
 
-class ItemSerializer2(serializers.ModelSerializer):
+class ItemSerializerWhitoutOrder(serializers.ModelSerializer):
     class Meta:
         model = Item
         depth = 0
@@ -39,12 +49,12 @@ class ItemSerializer2(serializers.ModelSerializer):
 
 class OrderItemSerializer(serializers.ModelSerializer):
 
-    items = ItemSerializer2(many=True)
+    items = ItemSerializerWhitoutOrder(many=True)
 
     class Meta:
         model = Order
         depth = 0
-        fields = ["user", "orderType", "justification", "date", "items"]
+        fields = ["id", "user", "orderType", "justification", "date", "items"]
 
     @atomic
     def create(self, validated_data):
