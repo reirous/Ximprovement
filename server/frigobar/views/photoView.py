@@ -15,6 +15,6 @@ class PhotoFilters(filters.FilterSet):
         }
 
 class PhotoViewSet(viewsets.ModelViewSet):
-    queryset = Photo.objects.all().order_by('description')
+    queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
     filterset_class = PhotoFilters

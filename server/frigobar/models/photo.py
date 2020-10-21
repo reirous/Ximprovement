@@ -11,6 +11,6 @@ class PhotoType:
 class Photo(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='photos')
     photoType = models.IntegerField()
-    directory = models.CharField("Photo directory", max_length=150, default=None, blank=True, null=True)
+    directory = models.FilePathField("Photo directory", default=None, blank=True, null=True)
 
     status = PhotoType()
