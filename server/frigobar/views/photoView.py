@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from frigobar.models.photo import Photo
 from frigobar.serializers.photoSerializer import PhotoSerializer
@@ -10,6 +8,9 @@ from rest_framework.decorators import action
 from rest_framework.schemas import ManualSchema
 import coreapi
 import coreschema
+from rest_framework import status
+import os
+import errno
 
 class PhotoFilters(filters.FilterSet):
 
@@ -42,10 +43,24 @@ class PhotoViewSet(viewsets.ModelViewSet):
     )
     def download_file(self, request, pk):
         """Download a loan application document"""
-        #file = self.get_object()
-        file = open("e:\\test.jpg", 'rb')
-        response = FileResponse(file, content_type='img/jpg')
-        #response['Content-Length'] = len(file)
-        response['Content-Disposition'] = 'attachment; filename="test.jpg​​​​​"'
+        photo = self.get_object()
+        directory = photo.directory + str(photo.id) + ".jpg"
+        file = open(directory, 'rb')
+        response = FileResponse(file, content_type='img/jpeg')
+        tamanho = os.path.getsize(directory)
+        response['Content-Length'] = tamanho
+        response['Content-Disposition'] = 'attachment; filename="' + str(photo.id) + '.jpg"'
 
         return response
+
+    def destroy(self, request, *args, **kwargs):
+        photo = self.get_object()
+        directory = photo.directory + str(photo.id) + ".jpg"
+        try:
+            os.remove(directory)
+        except OSError as exc:
+            if exc.errno != errno.ENOENT:
+                raise
+
+        self.perform_destroy(photo)
+        return Response(status=status.HTTP_200_OK)
