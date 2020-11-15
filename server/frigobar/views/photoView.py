@@ -44,10 +44,10 @@ class PhotoViewSet(viewsets.ModelViewSet):
     def download_file(self, request, pk):
         """Download a loan application document"""
         photo = self.get_object()
-        directory = photo.directory + str(photo.id) + ".jpg"
-        file = open(directory, 'rb')
+        filePath = photo.directory + str(photo.id) + ".jpg"
+        file = open(filePath, 'rb')
         response = FileResponse(file, content_type='img/jpeg')
-        tamanho = os.path.getsize(directory)
+        tamanho = os.pathget.size(filePath)
         response['Content-Length'] = tamanho
         response['Content-Disposition'] = 'attachment; filename="' + str(photo.id) + '.jpg"'
 
@@ -55,9 +55,9 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         photo = self.get_object()
-        directory = photo.directory + str(photo.id) + ".jpg"
+        filePath = photo.directory + str(photo.id) + ".jpg"
         try:
-            os.remove(directory)
+            os.remove(filePath)
         except OSError as exc:
             if exc.errno != errno.ENOENT:
                 raise
