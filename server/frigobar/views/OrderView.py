@@ -104,6 +104,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                     output_field=DecimalField()
                 )
             ),
+            total=Sum(ExpressionWrapper
+                             (
+                             F('items__price') * F('items__quantity'),
+                             output_field=DecimalField()
+                         )
+            )
         )
         serializer = OrderAllSerializer(order, many=True)
         return Response(data=serializer.data)
