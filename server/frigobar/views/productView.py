@@ -73,3 +73,20 @@ class ProductViewSet(viewsets.ModelViewSet):
                 )
         serializer = ProductConsumedSerializer(products, many=True)
         return Response(data=serializer.data)
+
+    @action(
+        methods=["get"],
+        detail=False,
+        url_path="productsGallery",
+    )
+    def get_products(self, request):
+        products = self.filter_queryset(self.get_queryset())
+        serializer = ProductSerializer(products, many=True)
+
+        productsList = []
+
+        for aux in serializer.data:
+            productsList.append({'value': aux['id'],
+                               'label': aux['description']})
+
+        return Response(data=productsList)
