@@ -11,6 +11,7 @@ import coreschema
 from rest_framework import status
 import os
 import errno
+import base64
 
 class PhotoFilters(filters.FilterSet):
 
@@ -18,6 +19,7 @@ class PhotoFilters(filters.FilterSet):
         model = Photo
         fields = {
             'photoType':['exact',],
+            'product':['exact',],
         }
 
 class PhotoViewSet(viewsets.ModelViewSet):
@@ -47,7 +49,7 @@ class PhotoViewSet(viewsets.ModelViewSet):
         filePath = photo.directory + str(photo.id) + ".jpg"
         file = open(filePath, 'rb')
         response = FileResponse(file, content_type='img/jpeg')
-        tamanho = os.pathget.size(filePath)
+        tamanho = os.path.getsize(filePath)
         response['Content-Length'] = tamanho
         response['Content-Disposition'] = 'attachment; filename="' + str(photo.id) + '.jpg"'
 
