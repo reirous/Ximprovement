@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: projeto-teste
+  annotations:
+    github.com/project-slug: reirous/Ximprovement
+spec:
+  type: other
+  lifecycle: unknown
+  owner: luan
